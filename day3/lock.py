@@ -10,7 +10,7 @@ def locked():
             card.error += 1
             print "密码输入错误\033[31m%s\033[0m次" %card.error
     if card.error == 3:
-        lock = file("E:\pythonworks\works\day3\lock.txt","w")
+        lock = file("E:\python_operations\day3\lock.txt","w")
         lock.write("locked")
         lock.close()
         print "密码输入错误 %s 次 帐号锁定" %card.error
