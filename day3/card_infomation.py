@@ -65,8 +65,8 @@ def transferred():
                 print "你转出 %s 卡内可用余额:%s "%(zhuangzhang_jine,card.card_available)
             else:
                 print "你的余额不足"
+            break
         else:
             print "卡号输入错误"
-    print "输入卡号错误-----退出"
 if __name__ in "__main__":
     transferred()
