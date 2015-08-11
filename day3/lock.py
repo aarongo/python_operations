@@ -4,7 +4,7 @@ def locked():
     for passwd in range(3):
         card_passwd = raw_input("Please input card passworld:").strip()
         if card_passwd == card.card_passwd:
-            print "\033[32m--------welcome Login--------\033[0m"
+            print "\033[32m--------welcome Login--------\n 请查看你的信用卡信息\033[0m"
             break
         else:
             card.error += 1
