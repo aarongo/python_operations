@@ -3,7 +3,7 @@ import os
 import lock
 import card
 def userstatus():
-    if os.path.exists("E:\python_operations\day3\lock.txt"):
+    if os.path.exists("lock.txt"):
         print "用户已经被锁定"
     else:
         for user in range(3):
