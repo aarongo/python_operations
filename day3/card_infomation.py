@@ -1,6 +1,7 @@
 #_*_coding:utf-8_*_
 import card
 import pickle
+import shopping
 #信用卡信息
 def info():
     print "你的信用卡额度为 \033[31m %s \033[0m 你的可用额度 \033[31m %s \033[0m取现额度为 \033[31m %s \033[0m 取现的手续费是 \033[31m %s \033[0m" %(card.card_credits,card.card_available,card.cash_amount,card.poundage)
@@ -68,5 +69,24 @@ def transferred():
             break
         else:
             print "卡号输入错误"
+#支付接口
+def pay():
+    print "你需要支付购买商品的钱数为: %s"%card.shop_money
+    if card.shop_money > card.card_available:
+        print "你花的钱大于可用额度"
+    else:
+        shop_pay = int(raw_input("请输入你需要支付的钱:"))
+        if shop_pay >card.shop_money:
+            print "你没有花这么多钱"
+        elif shop_pay < card.shop_money:
+            print "你支付的钱数不够"
+        elif shop_pay == card.shop_money:
+            card.card_available -= card.shop_money
+            print "--------你支付成功,购买的商品为--------"
+            for index,shop in enumerate(card.shop_car):
+                print shop[0],shop[1]
+            print "------------卡内剩余:\033[31m %s \033[0m------------"%(card.card_available)
+        elif shop_pay >card.card_available:
+            print "你的可用余额不足"
 if __name__ in "__main__":
-    transferred()
+    pay()

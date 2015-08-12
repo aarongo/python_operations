@@ -5,5 +5,7 @@ import card_infomation
 import user_status
 def login():
     user_status.userstatus()
-    card_infomation.info()
-login()
+def shoppay():
+     card_infomation.pay()
+if __name__ in '__main__':
+    login()

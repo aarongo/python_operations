@@ -15,3 +15,18 @@ poundage = 0.05
 #new 信用卡
 card_credits_new = 15000
 card_available_new = 15000
+#商品列表
+shop_list = [
+    ['iphone6Plus',6800],
+    ['iphone6',6000],
+    ['computer',5500],
+    ['harddisk',500],
+    ['mouse',600],
+    ['coffee',100],
+    ['cups',15],
+    ['satchel',150]
+]
+#购物车
+shop_car = []
+#钱数
+shop_money = 0
