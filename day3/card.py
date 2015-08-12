@@ -30,3 +30,5 @@ shop_list = [
 shop_car = []
 #钱数
 shop_money = 0
+#交易记录
+transaction = []

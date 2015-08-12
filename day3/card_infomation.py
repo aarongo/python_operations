@@ -1,6 +1,8 @@
 #_*_coding:utf-8_*_
 import card
 import pickle
+import time
+import lock
 import shopping
 #信用卡信息
 def info():
@@ -17,21 +19,24 @@ def cash():
         card.card_shuyu = card.card_credits-(cash_qx + cash_sxf)
         #可用额度
         card.card_available -= (cash_qx + cash_sxf)
-        #将剩余额度写入文件用pickle模块进行持久化，交易记录
-        f1 = file("temp.pkl","w")
-        pickle.dump(cash_qx,f1,True)
-        pickle.dump(cash_sxf,f1,True)
-        f1.close()
+
         print "您取出的钱是 \033[31m %s \033[0m 需要的手续费是 \033[31m %s \033[0m" %(cash_qx,cash_sxf)
+        card.transaction.append([time.strftime('%Y-%m-%d',time.localtime(time.time())),"quqianshu",cash_qx,"shouxufei",cash_sxf])
+        #将剩余额度写入文件用pickle模块进行持久化，交易记录
+        f1 = file("temp.txt","w")
+        pickle.dump(card.transaction,f1,True)
+        f1.close()
     else:
         print "您取现的额度超过了限定额度\033[31m %s \033[0m"%card.cash_amount
+    lock.locked()
 #查询函数
 def inquiry():
     #查询剩余额度，用pickle模块的load方法读取文件中的持久化数据
-    f1 = file('temp.pkl',"r")
+    f1 = file('temp.txt',"r")
     card_qk = pickle.load(f1)
-    card_sxf = pickle.load(f1)
-    print "你的剩余额度为 \033[31m %s \033[0m 你的可用额度 \033[31m %s \033[0m \n----交易列表----\n取现%s 手续费%s" %(card.card_shuyu,card.card_available,card_qk,card_sxf)
+    #card_sxf = pickle.load(f1)
+    print "你的剩余额度为 \033[31m %s \033[0m 你的可用额度 \033[31m %s \033[0m \n----交易列表----\n%s" %(card.card_shuyu,card.card_available,card_qk)
+    lock.locked()
 #还款函数
 def repayment():
     #读取剩余额度，确定需要还款
@@ -48,7 +53,13 @@ def repayment():
         #如果小于需要的还款数,剩余额度与可用额度都等于原额度加上还款数
          card.card_shuyu += repayment_num
          card.card_available += repayment_num
+    #将剩余额度写入文件用pickle模块进行持久化，交易记录
+    card.transaction.append([time.strftime('%Y-%m-%d',time.localtime(time.time())),"yinghuankuan",card_huankuan,"shijihuankuan",repayment_num])
+    f1 = file("temp.txt","w")
+    pickle.dump(card.transaction,f1,True)
+    f1.close()
     print "你的信用卡额度为: \033[31m %s \033[0m \n你的可用额度: \033[31m %s \033[0m \n剩余额度为:\033[31m %s \033[0m"%(card.card_credits,card.card_available,card.card_shuyu)
+    lock.locked()
 #转账函数
 def transferred():
     #循环输入对方卡号3次
@@ -64,11 +75,17 @@ def transferred():
                 #减掉自己账户可用额度
                 card.card_available -= zhuangzhang_jine
                 print "你转出 %s 卡内可用余额:%s "%(zhuangzhang_jine,card.card_available)
+                #将剩余额度写入文件用pickle模块进行持久化，交易记录
+                card.transaction.append([time.strftime('%Y-%m-%d',time.localtime(time.time())),"zhuanchu",zhuangzhang_jine])
+                f1 = file("temp.txt","w")
+                pickle.dump(card.transaction,f1,True)
+                f1.close()
             else:
                 print "你的余额不足"
             break
         else:
             print "卡号输入错误"
+    lock.locked()
 #支付接口
 def pay():
     print "你需要支付购买商品的钱数为: %s"%card.shop_money
@@ -83,10 +100,20 @@ def pay():
         elif shop_pay == card.shop_money:
             card.card_available -= card.shop_money
             print "--------你支付成功,购买的商品为--------"
+            #将剩余额度写入文件用pickle模块进行持久化，交易记录
+            card.transaction.append([time.strftime('%Y-%m-%d',time.localtime(time.time())),"gouwu",shop_pay])
+            f1 = file("temp.txt","w")
+            pickle.dump(card.transaction,f1,True)
+            f1.close()
             for index,shop in enumerate(card.shop_car):
                 print shop[0],shop[1]
             print "------------卡内剩余:\033[31m %s \033[0m------------"%(card.card_available)
         elif shop_pay >card.card_available:
             print "你的可用余额不足"
+    lock.locked()
 if __name__ in "__main__":
+    cash()
+    repayment()
+    transferred()
     pay()
+    inquiry()

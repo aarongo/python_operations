@@ -1,6 +1,7 @@
 #_*_coding:utf-8_*_
 import card
 import login_interface
+import lock
 #购物网站
 def merchandise():
     while True:
@@ -20,8 +21,8 @@ def merchandise():
             for index,shop in enumerate(card.shop_car):
                 print index,shop[0],shop[1]
             print "你需要支付的金额为:%s"%card.shop_money
-            login_interface.login()
             login_interface.shoppay()
+            lock.locked()
             break
 if __name__ in '__main__':
     merchandise()
