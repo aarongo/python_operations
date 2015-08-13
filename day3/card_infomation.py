@@ -16,7 +16,7 @@ def cash():
         #计算手续费
         cash_sxf = cash_qx * card.poundage
         #计算剩余额度
-        card.card_shuyu = card.card_credits-(cash_qx + cash_sxf)
+        #card.card_shuyu = card.card_available-(cash_qx + cash_sxf)
         #可用额度
         card.card_available -= (cash_qx + cash_sxf)
 
@@ -35,30 +35,31 @@ def inquiry():
     f1 = file('temp.txt',"r")
     card_qk = pickle.load(f1)
     #card_sxf = pickle.load(f1)
-    print "你的剩余额度为 \033[31m %s \033[0m 你的可用额度 \033[31m %s \033[0m \n----交易列表----\n%s" %(card.card_shuyu,card.card_available,card_qk)
+    #你的剩余额度为 \033[31m %s \033[0m
+    print "你的可用额度 \033[31m %s \033[0m \n----交易列表----\n%s" %(card.card_available,card_qk)
     lock.locked()
 #还款函数
 def repayment():
     #读取剩余额度，确定需要还款
-    card_huankuan = card.card_credits-card.card_shuyu
+    card_huankuan = card.card_credits-card.card_available
     print "您需要还款",card_huankuan
     repayment_num = int(raw_input("输入你的还款："))
     #判断换款数是否大于需要还款数
     if repayment_num > card_huankuan:
         #如果大于还款数,剩余额度与信用卡额度相等
-        card.card_shuyu = card.card_credits
+        #card.card_shuyu = card.card_credits
         #可用额度换款数加上元可用额度
         card.card_available += repayment_num
     else:
         #如果小于需要的还款数,剩余额度与可用额度都等于原额度加上还款数
-         card.card_shuyu += repayment_num
+         #card.card_shuyu += repayment_num
          card.card_available += repayment_num
     #将剩余额度写入文件用pickle模块进行持久化，交易记录
     card.transaction.append([time.strftime('%Y-%m-%d',time.localtime(time.time())),"yinghuankuan",card_huankuan,"shijihuankuan",repayment_num])
     f1 = file("temp.txt","w")
     pickle.dump(card.transaction,f1,True)
     f1.close()
-    print "你的信用卡额度为: \033[31m %s \033[0m \n你的可用额度: \033[31m %s \033[0m \n剩余额度为:\033[31m %s \033[0m"%(card.card_credits,card.card_available,card.card_shuyu)
+    print "你的信用卡额度为: \033[31m %s \033[0m \n你的可用额度: \033[31m %s \033[0m "%(card.card_credits,card.card_available)
     lock.locked()
 #转账函数
 def transferred():
@@ -99,6 +100,7 @@ def pay():
             print "你支付的钱数不够"
         elif shop_pay == card.shop_money:
             card.card_available -= card.shop_money
+            #card.card_shuyu = card.card_available -card.shop_money
             print "--------你支付成功,购买的商品为--------"
             #将剩余额度写入文件用pickle模块进行持久化，交易记录
             card.transaction.append([time.strftime('%Y-%m-%d',time.localtime(time.time())),"gouwu",shop_pay])

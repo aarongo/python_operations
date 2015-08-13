@@ -7,7 +7,7 @@ def locked():
         card_passwd = raw_input("Please input card passworld:").strip()
         if card_passwd == card.card_passwd:
             print "\033[32m--------welcome Login--------\033[0m"
-            print "1,查询 2,换款 3,转账 4,取现 5,购物 6,退出"
+            print "1---->\033[31m 查询 \033[0m 2---->\033[32m 还款 \033[0m 3---->\033[33m 转账 \033[0m 4---->\033[34m 取现 \033[0m 5---->\033[35m 购物 \033[0m 6---->\033[36m 退出 \033[0m"
             caozuo = int(raw_input("请输入要做什么?"))
             if caozuo == 1:
                 card_infomation.inquiry()
