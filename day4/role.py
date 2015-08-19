@@ -1,61 +1,73 @@
 # _*_coding:utf-8_*_
-import people
+from proson import Proson
 
 
-# class Role(people.People):
-#     def __init__(self, name, age, sex, job, race, feature, features, speciality, nationality):
-#         # people.People.__init__(self, name, age, sex, job, race, feature, features, speciality, nationality)
-#         super(Role, self).__init__(name, age, sex, job, race, feature, features, speciality, nationality)
-#
-#     def test(self):
-#         print "\33[;5m 姓名：%s 年龄：%s 性别：%s 职业：%s 人种：%s 特征：%s 功能：%s 角色： %s 国家：%s \33[0m" % (
-#             self.name, self.age, self.sex, self.job, self.race, self.feature, self.features, self.speciality,
-#             self.nationality)
-#
-# p1 = Role("tom", 22, "男", "it", "heizhongren", "heipifu", "tiaowu", "kongzhiyuan", "US")
-# p2 = Role("张三",33,"男","销售","黄种人","黄皮肤","吹牛逼","调酒师","中国")
-# p3 = Role("lisi",44,"男","销售","白种人","白皮肤","吹牛逼","调酒师","中国")
-# Role.story()
+class RoleOne(Proson):
+    def __init__(self, name, ages, sex, job, nationality, school, company, salary):
+        super(RoleOne, self).__init__(name, ages, sex, job, nationality)
+        self.school = school
+        self.company = company
+        self.salary = salary
 
-class Role1(people.Proson):
-    def __init__(self, name, age, sex, job,role2, role3):
-        super(Role1, self).__init__(name, age, sex)
-        self.job = job
-        self.role2 = role2
-        self.role3 = role3
-
-    def Story(self):
-        print """%s 和 %s 是高中同学时的恋人，\n
-              后来 %s 考上了北京城市学院，%s 没有，为了跟女朋友在一起， \n
-              他来到了北京打工（一家网吧当网管），挣钱为%s交学费，后来%s毕业后工作了， \n
-              遇到了公司的高富帅%s,然后两人就苟且在了一起，%s发现后非常伤心，发誓要把%s夺回来\n
-              ，然后他发粪学习，增加自身能力，参加自考，学习老男孩PYTHON，若干年后， \n
-              当上了某大型互联网公司的%s总监，月薪%s，北京买了车和房， \n
-              偶然又见到了%s,此时她已被高富%s甩了，%s提出再回到%s身边时，%s优雅的说。。。""" % (
-            self.name, self.role3.name, self.name, self.role3.name, self.name, self.name, self.role2.name,
-            self.role3.name,
-            self.name, self.role3.job, self.role3.gongneng, self.name, self.role2.name, self.name, self.role3.name,
-            self.role3.name)
+    def info(self):
+        Proson.info(self)
+        print "执行第一个RoleOne"
 
 
-class Role2(people.Proson):
-    def __init__(self, name, age, sex, job, renzhong):
-        super(Role2, self).__init__(name, age, sex)
-        self.job = job
-        self.renzhong = renzhong
+class RoleTwo(Proson):
+    def __init__(self, name, ages, sex, job, nationality, company, salary):
+        super(RoleTwo, self).__init__(name, ages, sex, job, nationality)
+        self.company = company
+        self.salary = salary
+
+    def info(self):
+        Proson.info(self)
+        print "运行第二个RoleTwo"
 
 
-class Role3(people.Proson):
-    def __init__(self, name, age, sex, job, renzhong, gongneng):
-        super(Role3, self).__init__(name, age, sex)
-        self.job = job
-        self.renzhong = renzhong
-        self.gongneng = gongneng
+class RoleThree(Proson):
+    def __init__(self, name, ages, sex, job, nationality, school, company, post, skill, salary):
+        super(RoleThree, self).__init__(name, ages, sex, job, nationality)
+        self.school = school
+        self.company = company
+        self.post = post
+        self.skill = skill
+        self.salary = salary
+
+    def info(self):
+        Proson.info(self)
+        print "运行第三个RoleThree"
 
 
-role2 = Role2("Peter", 25, "男", "xiaoshou", "hongzhongren")
-role3 = Role3("John Berry", 27, "男", "gognchengshi", "baizhongren", "wan")
+class Chose(object):
+    def chose(self):
+        while True:
+            try:
+                role_list = ['John Berry', "Liz", "Peter"]
+                for index, role in enumerate(role_list):
+                    print index, role
+                chose = raw_input("选择你的游戏角色").strip()
+                if chose.isdigit():
+                    chose = int(chose)
 
-role1 = Role1("Liz", 20, "女", "IT", role2, role3)
+                    if role_list[chose] == "Liz":
+                        people1 = RoleOne("Liz", 24, "女", " ", "美国人", "北京城市学院", " ", " ")
+                        people1.info()
+                        break
+                    elif role_list[chose] == "John Berry":
+                        people1 = RoleThree("John Berry", 27, "男", "运维工程师", "美国人", "OldBoy", "google", "首席运维工程师", "python",
+                                            "1000000")
+                        people1.info()
+                        break
+                    elif role_list[chose] == "Peter":
+                        people1 = RoleTwo("Peter", 28, "男", "Java工程师", "英国人", "腾讯", 10000)
+                        people1.info()
+                        break
+                    else:
+                        print "请选择角色"
+            except IndexError, err:
+                print err
 
-role1.Story()
+
+run = Chose()
+run.chose()
