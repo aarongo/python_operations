@@ -11,7 +11,9 @@ class RoleOne(Proson):
 
     def info(self):
         Proson.info(self)
-        print "执行第一个RoleOne"
+        print '''
+                school: %s
+        ''' % (self.school)
 
 
 class RoleTwo(Proson):
@@ -22,7 +24,9 @@ class RoleTwo(Proson):
 
     def info(self):
         Proson.info(self)
-        print "运行第二个RoleTwo"
+        print '''
+                 company :%s
+                 salary  :%s''' % (self.company, self.salary)
 
 
 class RoleThree(Proson):
@@ -36,7 +40,13 @@ class RoleThree(Proson):
 
     def info(self):
         Proson.info(self)
-        print "运行第三个RoleThree"
+        print  '''
+                 school : %s
+                company : %s
+                   psot : %s
+                  skill : %s
+                  salary: %s
+        ''' % (self.school, self.company, self.post, self.skill, self.salary)
 
 
 class Chose(object):
@@ -55,7 +65,8 @@ class Chose(object):
                         people1.info()
                         break
                     elif role_list[chose] == "John Berry":
-                        people1 = RoleThree("John Berry", 27, "男", "运维工程师", "美国人", "OldBoy", "google", "首席运维工程师", "python",
+                        people1 = RoleThree("John Berry", 27, "男", "运维工程师", "美国人", "OldBoy", "google", "首席运维工程师",
+                                            "python",
                                             "1000000")
                         people1.info()
                         break

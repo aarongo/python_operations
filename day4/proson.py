@@ -12,7 +12,7 @@ class Proson(object):
 
     # 定义方法
     def info(self):
-        print '''               ----Proson_list----
+        print '''                   ----角色介绍---
                     name: %s
                     age : %s
                     sex : %s
