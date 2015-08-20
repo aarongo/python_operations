@@ -117,7 +117,7 @@ class Chose(object):
                         print "--------Welcome Login Game--------"
                         break
                     else:
-                        print "请选择角色"
+                        print "\033[31m请选择进行游戏的角色 \033[0m"
             except IndexError, err:
                 print err
 
