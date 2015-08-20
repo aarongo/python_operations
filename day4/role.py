@@ -120,7 +120,5 @@ class Chose(object):
                         print "\033[31m请选择进行游戏的角色!!! \033[0m"
             except IndexError, err:
                 print err
-
-
 run = Chose()
 run.chose()
