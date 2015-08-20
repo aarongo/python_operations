@@ -37,6 +37,7 @@ class RoleTwo(Proson):
                     国籍:%s
                     公司：%s
                     工资：%s
+                    This is SB
         ''' % (self.name, self.ages, self.sex, self.job, self.nationality, self.company, self.salary)
 
 
