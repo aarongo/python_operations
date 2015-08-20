@@ -119,7 +119,5 @@ class Chose(object):
                         print "请选择角色"
             except IndexError, err:
                 print err
-
-
 run = Chose()
 run.chose()
