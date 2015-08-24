@@ -7,7 +7,9 @@ class Login(object):
     def login(self):
         name = raw_input("Please Input Your Name:")
         if name in account.user1_password:
-            password = getpass.getpass("Please Input Your Password:")
+            password =getpass.win_getpass("Please Input Your Password:")
+            if password == account.user1_password[name]:
+                print "--------Welcome Login ftpserver-------"
         elif name in account.user2_password:
             print "----user2--->",account.user2_password[name]
 run = Login()
