@@ -7,7 +7,8 @@ class DBConn:
 
     # 建立和数据库系统的连接
     def connect(self):
-        self.conn = MySQLdb.connect(host="localhost", port=3306, user="root", passwd="aarongo", db="python_linux")
+        self.conn = MySQLdb.connect(host="localhost", port=3306, user="root", passwd="aarongo", db="python_linux",
+                                    charset="utf8")
 
     # 获取操作游标
     def cursor(self):
@@ -16,7 +17,6 @@ class DBConn:
         except (AttributeError, MySQLdb.OperationalError):
             self.connect()
             return self.conn.cursor()
-
 
     # 提交
     def commit(self):
